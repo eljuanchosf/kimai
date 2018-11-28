@@ -17,3 +17,5 @@
 !/libraries/phpclasses/
 !/libraries/phpjs/
 !/libraries/TinyButStrongPlugins/
+
+.env
