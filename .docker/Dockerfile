@@ -9,6 +9,7 @@ RUN apt-get update && apt-get upgrade && \
     zip \
     zlib1g-dev
 
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 RUN docker-php-ext-install -j$(nproc) mysqli zip
 
 COPY . /srv/app
