@@ -65,6 +65,12 @@ if (!isset($_POST['password']) || is_array($_POST['password'])) {
     $password = $_POST['password'];
 }
 
+if (!isset($_POST['gacode']) || is_array($_POST['gacode'])) {
+    $gacode = '';
+} else {
+    $gacode = $_POST['gacode'];
+}
+
 // User requested logout
 $justLoggedOut = false;
 if ($_REQUEST['a'] == 'logout') {
@@ -133,7 +139,7 @@ switch ($_REQUEST['a']) {
             }
         } else {
             // perform login of user
-            if ($authPlugin->authenticate($name, $password, $userId)) {
+            if ($authPlugin->authenticate($name, $password, $gacode, $userId)) {
                 if ($userId === false) {
                     $userId = $database->user_create([
                         'name' => $name,

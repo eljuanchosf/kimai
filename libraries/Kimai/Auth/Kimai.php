@@ -25,11 +25,14 @@ class Kimai_Auth_Kimai extends Kimai_Auth_Abstract
     /**
      * @param string $username
      * @param string $password
+     * @param string $gacode
      * @param int $userId
      * @return bool
      */
-    public function authenticate($username, $password, &$userId)
+    public function authenticate($username, $password, $gacode, &$userId)
     {
+        $kga = Kimai_Registry::getConfig();
+        $googleAuthenticator = new \Dolondro\GoogleAuthenticator\GoogleAuthenticator();
         $database = $this->getDatabase();
 
         $userId = $database->user_name2id($username);
@@ -43,7 +46,12 @@ class Kimai_Auth_Kimai extends Kimai_Auth_Abstract
         $pass = $userData['password'];
         $userId = $userData['userID'];
 
-        return $pass == $passCrypt && $username != '';
+        if ($pass == $passCrypt && $username != '') {
+            if ($googleAuthenticator->authenticate($kga['ga_secret_key'], $gacode)) {
+                return true;    
+            }    
+        }
+        return false;
     }
 
     /**

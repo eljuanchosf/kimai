@@ -20,7 +20,7 @@ body {
 }
 
 #box {
-	background: url(grfx/login_bg_g3.png) no-repeat;
+	background: black no-repeat;
 	display: block;
 	width: 448px;
 	height: 298px;
@@ -168,7 +168,7 @@ body {
 }
 
 #install form {
-	background: url(grfx/login_bg_g3.png) no-repeat;
+	background: black no-repeat;
 	display: block;
 	width: 448px;
 	height: 298px;

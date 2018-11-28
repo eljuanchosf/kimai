@@ -140,7 +140,7 @@ abstract class Kimai_Auth_Abstract
      * @param int $userId user id. If none exists it will be false
      * @return boolean either true if the credentials were correct, or false otherwise
      */
-    abstract public function authenticate($username, $plainPassword, &$userId);
+    abstract public function authenticate($username, $plainPassword, $gacode, &$userId);
 
     /**
      * Return a map from group IDs to membership role IDs to which users should be added, if they authenticated but are not known to Kimai.

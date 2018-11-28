@@ -61,7 +61,8 @@ $kga = new Kimai_Config([
     'server_password' => $server_password,
     'server_charset' => $server_charset,
     'defaultTimezone' => $defaultTimezone,
-    'password_salt' => isset($password_salt) ? $password_salt : ''
+    'password_salt' => isset($password_salt) ? $password_salt : '',
+    'ga_secret_key' => $ga_secret_key
 ]);
 
 // will inject the version variables into the Kimai_Config object

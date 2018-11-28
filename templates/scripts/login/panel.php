@@ -82,6 +82,10 @@
 						<?php echo $this->translate('password')?>:
 					</label>
 					<input type="password" name="password" id="kimaipassword" />
+					<label for="kimaigacode">
+						<?php echo $this->translate('gacode')?>:
+					</label>					
+					<input type="password" name="gacode" id="kimaigacode" />
 					<button id="loginButton" type='submit'></button>
 					<a id="forgotPasswordLink" href=""><?php echo $this->translate('forgotPassword') ?></a>
 				</fieldset>

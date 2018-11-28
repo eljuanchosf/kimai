@@ -86,6 +86,7 @@ return [
     "loggedon" => "Logged on as user:",
     "username" => "Username",
     "password" => "Password",
+    "gacode" => "Authenticator code",
     "newPassword" => "New Password",
     "retypePassword" => "retype password",
     "passwordsDontMatch" => "The passwords you've entered don't match.",
