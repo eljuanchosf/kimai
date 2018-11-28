@@ -29,6 +29,7 @@ $language = "en";
 $password_salt = "PASSWORD_SALT";
 $defaultTimezone = "Europe/London";
 $skin = "standard";
+$ga_secret_key = "";
 $authenticator = "kimai";
 $billable = array (
   0 => 0,
