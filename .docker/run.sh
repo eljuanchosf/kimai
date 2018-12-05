@@ -8,7 +8,8 @@ autoconf=".docker/autoconf.php"
 echo "Parsing ENV values..."
 
 if [ ! -z "$MYSQL_PEM" ]; then
-    curl https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt.pem -o $MYSQL_PEM
+    echo "Downloading MySQL PEM file"
+    curl -s https://www.digicert.com/CACerts/BaltimoreCyberTrustRoot.crt.pem -o $MYSQL_PEM
 fi
 
 sed -e "s/MYSQL_HOSTNAME/$MYSQL_HOSTNAME/g" \
