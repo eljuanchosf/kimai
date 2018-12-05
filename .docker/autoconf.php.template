@@ -25,6 +25,7 @@ $server_username = "MYSQL_USER";
 $server_password = "MYSQL_PASSWORD";
 $server_charset = "utf8";
 $server_prefix = "MYSQL_SERVER_PREFIX";
+$server_pem = "MYSQL_PEM"
 $language = "en";
 $password_salt = "PASSWORD_SALT";
 $defaultTimezone = "Europe/London";
