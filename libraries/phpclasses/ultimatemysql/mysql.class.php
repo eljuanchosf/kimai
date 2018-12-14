@@ -24,6 +24,7 @@ class MySQL
 	private $db_pass    = "";          // password
 	private $db_dbname  = "";          // database name
 	private $db_charset = "";          // optional character set (i.e. utf8)
+	private $db_pemfile = "";
 	private $db_pcon    = false;      // use persistent connection?
 
 	// constants for SQLValue function
@@ -38,7 +39,7 @@ class MySQL
 	const SQLVALUE_Y_N      = "y-n";
 
 	// class-internal variables - do not change
-	public  $mysql_link      = 0;       // mysql link resource
+	public  $mysql_link     = 0;        // mysql link resource
 	private $active_row     = -1;       // current row
 	private $error_desc     = "";       // last mysql error string
 	private $error_number   = 0;        // last mysql error number
@@ -64,15 +65,18 @@ class MySQL
 	 * @param string $server   (Optional) Host address
 	 * @param string $username (Optional) User name
 	 * @param string $password (Optional) Password
+	 * @param string $pemfile  (Optional) Server pem file for SSL connection
 	 * @param string $charset  (Optional) Character set
 	 */
 	public function __construct($connect = true, $database = null, $server = null,
-								$username = null, $password = null, $charset = null) {
+								$username = null, $password = null, $pemfile = null,
+								$charset = null) {
 
 		if ($database !== null) $this->db_dbname  = $database;
 		if ($server   !== null) $this->db_host    = $server;
 		if ($username !== null) $this->db_user    = $username;
 		if ($password !== null) $this->db_pass    = $password;
+		if ($pemfile  !== null) $this->db_pemfile = $pemfile;
 		if ($charset  !== null) $this->db_charset = $charset;
 
 		if (strlen($this->db_host) > 0 &&
@@ -1037,12 +1041,14 @@ class MySQL
 	 * @param string $server   (Optional) Host address
 	 * @param string $username (Optional) User name
 	 * @param string $password (Optional) Password
+	 * @param string $pemfile  (Optional) Pem file for SSL connections
 	 * @param string $charset  (Optional) Character set
 	 * @param boolean $pcon    (Optional) Persistant connection
 	 * @return boolean Returns TRUE on success or FALSE on error
 	 */
 	public function Open($database = null, $server = null, $username = null,
-						 $password = null, $charset = null, $pcon = false) {
+						 $password = null, $pemfile = null, $charset = null, 
+						 $pcon = false) {
 		$this->ResetError();
 
 		// Use defaults?
@@ -1050,20 +1056,30 @@ class MySQL
 		if ($server   !== null) $this->db_host    = $server;
 		if ($username !== null) $this->db_user    = $username;
 		if ($password !== null) $this->db_pass    = $password;
+		if ($pemfile  !== null) $this->db_pemfile = $pemfile;
 		if ($charset  !== null) $this->db_charset = $charset;
 		if (is_bool($pcon))     $this->db_pcon    = $pcon;
 
+		// Initialize connection
+		$this->mysql_link = mysqli_init();
+		if ($this->db_pemfile  !== null)  {
+			mysqli_ssl_set($this->mysql_link, NULL, NULL, $this->db_pemfile, NULL, NULL); 
+		}
 		$this->active_row = -1;
 
+		if (!@mysqli_real_connect($this->mysql_link, $this->db_host, $this->db_user, $this->db_pass, $this->db_dbname, 3306, MYSQLI_CLIENT_SSL)) {
+			error_log('Connect Error (' . mysqli_connect_errno() . ') '	. mysqli_connect_error());	
+		}
+		
 		// Open persistent or normal connection
-		if ($pcon) {
+/* 		if ($pcon) {
 			$this->mysql_link = @mysqli_pconnect(
 				'p:' . $this->db_host, $this->db_user, $this->db_pass);
 		} else {
 			$this->mysql_link = @mysqli_connect (
 				$this->db_host, $this->db_user, $this->db_pass);
 		}
-		// Connect to mysql server failed?
+ */		// Connect to mysql server failed?
 		if (! $this->IsConnected()) {
 			$this->SetError();
 			return false;

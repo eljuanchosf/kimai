@@ -59,6 +59,7 @@ $kga = new Kimai_Config([
     'server_database' => $server_database,
     'server_username' => $server_username,
     'server_password' => $server_password,
+    'server_pem'      => $server_pem,
     'server_charset' => $server_charset,
     'defaultTimezone' => $defaultTimezone,
     'password_salt' => isset($password_salt) ? $password_salt : '',

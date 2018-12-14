@@ -51,7 +51,7 @@ run: ## Run container on port configured in `app.config.env`
 		 --name="$(IMAGE_NAME)" $(DOCKER_REPO)/$(IMAGE_NAME):$(VERSION)
 
 rund: ## Run container detached on port configured in `app.config.env`
-	docker run --env-file=$(ENV_FILE) -itd --rm \
+	docker run --env-file=$(ENV_FILE) -d --rm \
 		-p=$(LOCAL_PORT):$(CONTAINER_PORT) \
 		--mount type=bind,source="$$(pwd)",target=/srv/app \
 		--name="$(IMAGE_NAME)" $(DOCKER_REPO)/$(IMAGE_NAME):$(VERSION)

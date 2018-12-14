@@ -54,6 +54,7 @@ class Kimai_Database_Mysql
                 $kga['server_database'],
                 $kga['server_username'],
                 $kga['server_password'],
+                $kga['server_pem'],
                 $useUtf8
             );
         }
@@ -66,14 +67,15 @@ class Kimai_Database_Mysql
      * @param string $database
      * @param string $username
      * @param string $password
+     * @param string $pemfile
      * @param boolean $utf8
      */
-    public function connect($host, $database, $username, $password, $utf8 = true)
+    public function connect($host, $database, $username, $password, $pemfile, $utf8 = true)
     {
-        if (isset($utf8) && $utf8) {
-            $this->conn = new MySQL(true, $database, $host, $username, $password, "utf8");
+        if (isset($utf8) && $utf8) {         
+            $this->conn = new MySQL(true, $database, $host, $username, $password, $pemfile, "utf8");
         } else {
-            $this->conn = new MySQL(true, $database, $host, $username, $password);
+            $this->conn = new MySQL(true, $database, $host, $username, $password, $pemfile);
         }
     }
 
