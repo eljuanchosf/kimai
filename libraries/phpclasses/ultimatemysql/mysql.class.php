@@ -1073,7 +1073,7 @@ class MySQL
 		    $this->mysql_link = $link;
                 }
 		
- 		// Connect to mysql server failed?
+		// Connect to mysql server failed?
 		if (! $this->IsConnected()) {
 			$this->SetError();
 			return false;
