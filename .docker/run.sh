@@ -1,9 +1,14 @@
 #! /usr/bin/env bash
 
-set -ex
+set -e
 
 template=".docker/autoconf.php.template"
 autoconf=".docker/autoconf.php"
+
+if [ -z ${MYSQL_HOSTNAME+x} ]; then 
+    echo "Reading from .env file"
+    source .env
+fi
 
 if [ ! -z "$MYSQL_PEM" ]; then
     echo "Downloading MySQL PEM file"

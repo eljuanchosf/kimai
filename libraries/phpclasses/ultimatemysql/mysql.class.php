@@ -1061,25 +1061,19 @@ class MySQL
 		if (is_bool($pcon))     $this->db_pcon    = $pcon;
 
 		// Initialize connection
-		$this->mysql_link = mysqli_init();
+		$link = mysqli_init();
 		if ($this->db_pemfile  !== null)  {
-			mysqli_ssl_set($this->mysql_link, NULL, NULL, $this->db_pemfile, NULL, NULL); 
+			mysqli_ssl_set($link, NULL, NULL, $this->db_pemfile, NULL, NULL); 
 		}
 		$this->active_row = -1;
 
-		if (!@mysqli_real_connect($this->mysql_link, $this->db_host, $this->db_user, $this->db_pass, $this->db_dbname, 3306, MYSQLI_CLIENT_SSL)) {
+		if (!mysqli_real_connect($link, $this->db_host, $this->db_user, $this->db_pass, $this->db_dbname, 3306, MYSQLI_CLIENT_SSL)) {
 			error_log('Connect Error (' . mysqli_connect_errno() . ') '	. mysqli_connect_error());	
-		}
-		
-		// Open persistent or normal connection
-/* 		if ($pcon) {
-			$this->mysql_link = @mysqli_pconnect(
-				'p:' . $this->db_host, $this->db_user, $this->db_pass);
 		} else {
-			$this->mysql_link = @mysqli_connect (
-				$this->db_host, $this->db_user, $this->db_pass);
-		}
- */		// Connect to mysql server failed?
+		    $this->mysql_link = $link;
+                }
+		
+ 		// Connect to mysql server failed?
 		if (! $this->IsConnected()) {
 			$this->SetError();
 			return false;
@@ -1524,7 +1518,8 @@ class MySQL
 				$this->error_desc = $errorMessage;
 			} else {
 				if ($this->IsConnected()) {
-					$this->error_desc = mysqli_error($this->mysql_link);
+					$this->error_desc = mysqli_connect_error();
+					// $this->error_desc = mysqli_error($this->mysql_link);
 				} else {
 					$this->error_desc = mysqli_connect_error();
 				}
