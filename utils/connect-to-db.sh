@@ -2,7 +2,9 @@
 
 set -e
 
-source ../.env
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/../.env
 
 if [ ! -z "$MYSQL_PEM" ]; then
     echo "Downloading MySQL PEM file"

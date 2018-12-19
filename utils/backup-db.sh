@@ -2,9 +2,11 @@
 
 set -e
 
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
 sudo apt-get install -y -qq zip unzip
 
-source ../.env
+source $SCRIPTPATH/../.env
 
 backup_dir="/mnt/KimaiBackups"
 backup_file="$backup_dir/$(date -I).sql"

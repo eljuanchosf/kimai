@@ -2,7 +2,9 @@
 
 set -e
 
-source ../.env
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+source $SCRIPTPATH/../.env
 
 my_ip=$(dig @resolver1.opendns.com ANY myip.opendns.com +short)
 
